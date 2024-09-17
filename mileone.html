@@ -1,32 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<h1 id="demo"></p>
-<!--
-<script>
-	var url = "https://www.googleapis.com/books/v1/volumes?q=modern%20web";
-	$(document).ready(function(){
-		$.ajax({
-			url: url,
-			dataType: 'json',
-				error: function(){
-					console.log('JSON failed to load data');
-				}
-			success:function(results
-		})
-	}
-</script>
--->
-<script>
-var url = "https://www.googleapis.com/books/v1/volumes?q=modern%20web";
-const myObj = url;
-document.getElementById("demo").innerHTML = myObj.items.id;
-
-</script>
-<h1>Milestone 1: Books, Books, and More Books</h1>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .book {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .book img {
+      width: 100px;
+      height: 150px;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+    .book h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+    .book p {
+      margin: 0;
+      font-size: 1em;
+      color: #555;
+    }
+    #next-button {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+  <h1>Books Display</h1>
+  
+  <div id="singleBookContainer">
+    <h2>Single Book</h2>
+    <div id="singleBook"></div>
+  </div>
 
+  <div id="carouselBookContainer">
+    <h2>Multiple Books</h2>
+    <div id="multipleBook"></div>
+    <button id="next-button">Next Book</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var books = [];
+      var currentIndex = 0;
+      
+      function fetchBooks() {
+        var xhr = new XMLHttpRequest();
+        var url = 'https://www.googleapis.com/books/v1/volumes?q=modern%20web';
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            books = response.items;
+            displaySingleBook(books[0]);
+            displayCarouselBook(books[0]);
+          }
+        };
+        xhr.send();
+      }
+
+      function displaySingleBook(book) {
+        var container = document.getElementById('singleBook');
+        container.innerHTML = ''; // Clear any existing content
+
+        if (book) {
+          var bookInfo = book.volumeInfo;
+          var bookDiv = document.createElement('div');
+          bookDiv.className = 'book';
+          
+          var coverImg = document.createElement('img');
+          coverImg.src = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
+          coverImg.alt = bookInfo.title;
+          
+          var detailsDiv = document.createElement('div');
+          
+          var titleElem = document.createElement('h3');
+          titleElem.textContent = bookInfo.title || 'No title available';
+          
+          var authorElem = document.createElement('p');
+          authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
+          
+          detailsDiv.appendChild(titleElem);
+          detailsDiv.appendChild(authorElem);
+          
+          bookDiv.appendChild(coverImg);
+          bookDiv.appendChild(detailsDiv);
+          
+          container.appendChild(bookDiv);
+        }
+      }
+
+      function displayCarouselBook(book) {
+        var container = document.getElementById('multipleBook');
+        container.innerHTML = ''; // clear the container
+
+        if (book) {
+          var bookInfo = book.volumeInfo;
+          var bookDiv = document.createElement('div');
+          bookDiv.className = 'book';
+          
+          var coverImg = document.createElement('img');
+          coverImg.src = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
+          coverImg.alt = bookInfo.title;
+          
+          var detailsDiv = document.createElement('div');
+          
+          var titleElem = document.createElement('h3');
+          titleElem.textContent = bookInfo.title || 'No title available';
+          
+          var authorElem = document.createElement('p');
+          authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
+          
+          detailsDiv.appendChild(titleElem);
+          detailsDiv.appendChild(authorElem);
+          
+          bookDiv.appendChild(coverImg);
+          bookDiv.appendChild(detailsDiv);
+          
+          container.appendChild(bookDiv);
+        }
+      }
+
+      function showNextBook() {
+        if (books.length > 0) {
+          currentIndex = (currentIndex + 1) % books.length;
+          displayCarouselBook(books[currentIndex]);
+        }
+      }
+
+      document.getElementById('next-button').addEventListener('click', showNextBook);
+      
+      fetchBooks();
+    });
+  </script>
 </body>
 </html>
