@@ -1,3 +1,32 @@
 <!DOCTYPE html>
 <html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<h1 id="demo"></p>
+<!--
+<script>
+	var url = "https://www.googleapis.com/books/v1/volumes?q=modern%20web";
+	$(document).ready(function(){
+		$.ajax({
+			url: url,
+			dataType: 'json',
+				error: function(){
+					console.log('JSON failed to load data');
+				}
+			success:function(results
+		})
+	}
+</script>
+-->
+<script>
+var url = "https://www.googleapis.com/books/v1/volumes?q=modern%20web";
+const myObj = url;
+document.getElementById("demo").innerHTML = myObj.items.id;
+
+</script>
+<h1>Milestone 1: Books, Books, and More Books</h1>
+</head>
+<body>
+
+</body>
 </html>
