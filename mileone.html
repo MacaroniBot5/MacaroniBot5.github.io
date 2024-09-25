@@ -45,7 +45,7 @@
   <div id="carouselBookContainer">
     <h2>Multiple Books</h2>
     <div id="multipleBook"></div>
-    <button id="next-button">Next Book</button>
+    <button id="next-button">Next Book</button> 
   </div>
 
   <script>
@@ -84,7 +84,7 @@
           var detailsDiv = document.createElement('div');
           
           var titleElem = document.createElement('h3');
-          titleElem.textContent = bookInfo.title || 'No title available';
+          titleElem.textContent = volumeInfo.title || 'No title available';
           
           var authorElem = document.createElement('p');
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
