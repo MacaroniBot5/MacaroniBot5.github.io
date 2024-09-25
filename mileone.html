@@ -88,17 +88,16 @@
 		  if (bookInfo.subtitle){
 			titleElem.textContent = titleElem.textContent + ": " + bookInfo.subtitle;
 		  }
-		  
-		  var publisherElem = document.createElement('h1');
-		  publisherElem.textContent = bookInfo.publisher;
           
           var authorElem = document.createElement('p');
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
 		  
-		  
+		  var publisherElem = document.createElement('h1');
+		  publisherElem.textContent = bookInfo.publisher;
           
           detailsDiv.appendChild(titleElem);
           detailsDiv.appendChild(authorElem);
+		  detailsDiv.appendChild(publisherElem);
           
           bookDiv.appendChild(coverImg);
           bookDiv.appendChild(detailsDiv);
