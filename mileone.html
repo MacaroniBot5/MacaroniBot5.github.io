@@ -84,10 +84,13 @@
           var detailsDiv = document.createElement('div');
           
           var titleElem = document.createElement('h3');
-          titleElem.textContent = bookInfo.title || 'No title available';
+          titleElem.textContent = bookInfo.title + ": " + bookInfo.subtitle || 'No title available';
           
           var authorElem = document.createElement('p');
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
+		  
+		  var publisherElem = document.createElement('p');
+		  publisherElem.textContent = bookInfo.publisher + ' ' + bookInfo.publishedDate;
           
           detailsDiv.appendChild(titleElem);
           detailsDiv.appendChild(authorElem);
