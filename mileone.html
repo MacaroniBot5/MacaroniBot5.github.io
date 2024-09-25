@@ -92,12 +92,16 @@
           var authorElem = document.createElement('p');
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
 		  
-		  var publisherElem = document.createElement('h1');
-		  publisherElem.textContent = bookInfo.publisher;
+		  var publisherElem = document.createElement('p');
+		  publisherElem.textContent = bookInfo.publisher + bookInfo.publishedDate;
+		  
+		  var descElem = document.createElement('p');
+		  descElem.textContent = bookInfo.description;
           
           detailsDiv.appendChild(titleElem);
           detailsDiv.appendChild(authorElem);
 		  detailsDiv.appendChild(publisherElem);
+		  detailsDiv.appendChild(descElem);
           
           bookDiv.appendChild(coverImg);
           bookDiv.appendChild(detailsDiv);
@@ -122,13 +126,24 @@
           var detailsDiv = document.createElement('div');
           
           var titleElem = document.createElement('h3');
-          titleElem.textContent = (bookInfo.title + ": " + bookInfo.subtitle || bookInfo.title) || 'No title available';
+          titleElem.textContent = bookInfo.title || 'No title available';
+		  if (bookInfo.subtitle){
+			titleElem.textContent = titleElem.textContent + ": " + bookInfo.subtitle;
+		  }
           
           var authorElem = document.createElement('p');
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
+		  
+		  var publisherElem = document.createElement('p');
+		  publisherElem.textContent = bookInfo.publisher + bookInfo.publishedDate;
+		  
+		  var descElem = document.createElement('p');
+		  descElem.textContent = bookInfo.description;
           
           detailsDiv.appendChild(titleElem);
           detailsDiv.appendChild(authorElem);
+		  detailsDiv.appendChild(publisherElem);
+		  detailsDiv.appendChild(descElem);
           
           bookDiv.appendChild(coverImg);
           bookDiv.appendChild(detailsDiv);
