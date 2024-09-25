@@ -61,7 +61,7 @@
           if (xhr.readyState === 4 && xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
             books = response.items;
-            displaySingleBook(books[0]);
+            displaySingleBook(books[2]);
             displayCarouselBook(books[0]);
           }
         };
