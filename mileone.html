@@ -84,7 +84,10 @@
           var detailsDiv = document.createElement('div');
           
           var titleElem = document.createElement('h3');
-          titleElem.textContent = bookInfo.title ? ": " + bookInfo.subtitle : 'No title available';
+          titleElem.textContent = bookInfo.title || 'No title available';
+		  if (bookInfo.subtitle){
+			titleElem.textContent = titleElem + bookInfo.subtitle;
+		  }
           
           var authorElem = document.createElement('p');
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
