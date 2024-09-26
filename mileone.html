@@ -33,6 +33,11 @@
       margin-top: 20px;
     }
   </style>
+  <ul>
+	<li><a href="https://macaronibot5.github.io/index.html">Home</a></li>
+	<li><a href="https://macaronibot5.github.io/mileone.html">Milestone 1</a></li>
+	<li><a href="https://macaronibot5.github.io/mileTwoMain.html">Milestone 2</a></li>
+  </ul>
 </head>
 <body>
   <h1>Books Display</h1>
@@ -135,8 +140,11 @@
           authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
 		  
 		  var publisherElem = document.createElement('p');
-		  publisherElem.textContent = bookInfo.publisher + bookInfo.publishedDate;
-		  
+		  if(bookInfo.publisher && bookInfo.publishedDate){
+		    publisherElem.textContent = bookInfo.publisher + ' ' + bookInfo.publishedDate;
+		  }else{
+			publisherElem.textContent = "Published: " + bookInfo.publishedDate;
+		  }
 		  var descElem = document.createElement('p');
 		  descElem.textContent = bookInfo.description;
           
