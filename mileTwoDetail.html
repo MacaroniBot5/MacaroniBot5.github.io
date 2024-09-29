@@ -71,7 +71,8 @@
 	}
   </style>
   <script>
-	async function loadBookChoice(){
+		document.addEventListener('DOMContentLoaded', function() {
+		async function loadBookChoice(){
 		try{
 			const response = localStorage.getItem("choice");
             const data = response.json;
@@ -83,6 +84,7 @@
                 alert('An error occurred while fetching the data. Please check the API URL and try again.');
 		  }
 	}
+	});
   </script>
 </head>
 <header>
@@ -105,16 +107,16 @@
     <div id="singleBook"></div>
   </div>
   <script>
-	document.addEventListener('DOMContentLoaded', function() {
 	function displayBook(book) {
         var container = document.getElementById('singleBook');
         container.innerHTML = ''; // Clear any existing content
+		console.log("start of primary function");
 
         if (book) {
           var bookInfo = book.volumeInfo;
           var bookDiv = document.createElement('div');
           bookDiv.className = 'book';
-          
+          console.log("makes");
           var coverImg = document.createElement('img');
           coverImg.src = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
           coverImg.alt = bookInfo.title;
@@ -147,7 +149,6 @@
           container.appendChild(bookDiv);
         }
       }
-	});
   </script>
 </body>
 </html>
