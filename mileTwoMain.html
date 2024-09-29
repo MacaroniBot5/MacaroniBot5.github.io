@@ -75,7 +75,7 @@
 			const query = document.getElementById('searchInput').value;
 			const formattedQuery = encodeURIComponent(query);
 			const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${formattedQuery}&maxResults=40&startIndex=${poi}`;
-			
+			localStorage.clear();
 			try {
 				const response = await fetch(apiUrl);
                 const data = await response.json();
@@ -89,19 +89,16 @@
                     let count = 0;
                     for (let i = 0; i < 8; i++) {
                         const row = document.createElement('tr');
+						var nam = "row" + i;
                         for (let j = 0; j < 5; j++) {
                             const cell = document.createElement('td');
+							var nam2 = "book" + i + j;
                             if (count < books.length) {
                                 const book = books[count];
                                 const title = book.volumeInfo.title;
                                 const coverImage = book.volumeInfo.imageLinks?.thumbnail || 'No image available';
-                                const bookInfo = book.selfLink;
-								function goToBookDetail(){
-									localStorage.clear();
-									localStorage.setItem("bookLink",bookInfo);
-									location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
-								}
-                                cell.innerHTML = `<strong>${title}</strong><br><button onclick="goToBookDetail()"><img src="${coverImage}" alt="${title}" style="width: 100px; height: auto;"></button>`;
+								localStorage.setItem(nam2,book.selfLink);
+                                cell.innerHTML = `<strong>${title}</strong><br><button id=${nam2} onclick="bookDetails(this.id)"><img src="${coverImage}" alt="${title}" style="width: 100px; height: auto;"></button>`;
                             } else {
                                 cell.textContent = 'No book available'; // Empty cell if no book
                             }
@@ -117,6 +114,11 @@
                 console.error('Error fetching data:', error);
                 alert('An error occurred while fetching the data. Please check the API URL and try again.');
 			}
+		}
+		
+		async function bookDetails(countItem){
+			localStorage.setItem("choice",countItem);
+			location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
 		}
 	</script>
 </head>

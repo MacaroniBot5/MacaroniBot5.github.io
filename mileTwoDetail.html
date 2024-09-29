@@ -73,11 +73,14 @@
   <script>
 	async function loadBookChoice(){
 		try{
-			const response = localStorage.getItem("bookLink");
+			const response = localStorage.getItem("choice");
             const data = response.json();
             const bookChoice = data.items;
 			displayBook(bookChoice);
-		}
+		} catch (error) {
+                console.error('Error fetching data:', error);
+                alert('An error occurred while fetching the data. Please check the API URL and try again.');
+		  }
 	}
   </script>
 </head>
@@ -87,7 +90,7 @@
 	<button class="nav-button" onclick="location.href='mileone.html'">Milestone 1</button>
 	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Milestone 2</button>
   </div>
-  <<div class="nav-header1">
+  <div class="nav-header1">
 	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Book Search</button>
 	<button class="nav-button" onclick="location.href='mileTwoDetail.html'">Book Details</button>
 	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
