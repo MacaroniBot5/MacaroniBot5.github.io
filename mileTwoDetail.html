@@ -105,6 +105,7 @@
     <div id="singleBook"></div>
   </div>
   <script>
+	document.addEventListener('DOMContentLoaded', function() {
 	function displayBook(book) {
         var container = document.getElementById('singleBook');
         container.innerHTML = ''; // Clear any existing content
@@ -146,6 +147,7 @@
           container.appendChild(bookDiv);
         }
       }
+	});
   </script>
 </body>
 </html>
