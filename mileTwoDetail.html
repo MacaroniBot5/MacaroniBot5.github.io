@@ -114,7 +114,7 @@
           bookDiv.className = 'book';
           
           var coverImg = document.createElement('img');
-          coverImg.src = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
+          coverImg.src = /*bookInfo.imageLinks ? */bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
           coverImg.alt = bookInfo.title;
           
           var detailsDiv = document.createElement('div');
