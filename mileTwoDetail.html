@@ -75,6 +75,7 @@
 		try{
 			const response = localStorage.getItem("choice");
             const data = response.json;
+			alert(data.volumeInfo.title);
             //const bookChoice = data.items;
 			displayBook(data);
 		} catch (error) {
