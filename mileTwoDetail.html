@@ -75,7 +75,7 @@
 		try{
 			const response = localStorage.getItem("choice");
             const data = response.json;
-			alert(data.volumeInfo.title);
+			//(data.volumeInfo.title);
             //const bookChoice = data.items;
 			displayBook(data);
 		} catch (error) {
@@ -97,7 +97,7 @@
 	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
   </div>
 </header>
-<body onload="loadBookChoice()">
+<body>
 	<h1>Book Information</h1>
   
   <div id="singleBookContainer">
