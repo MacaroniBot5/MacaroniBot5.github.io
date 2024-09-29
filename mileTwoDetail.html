@@ -3,11 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Books Display</title>
+  <title>Book Details</title>
   <style>
+	header{
+	  color: white;
+	}
+	.nav-header{
+	  background-color: #06402B;
+	  padding: 10px;
+	  text-align: left;
+	}
+	.nav-header1{
+	  background-color: #06402B;
+	  padding: 10px;
+	  text-align: center;
+	  border: solid;
+	}
+	.nav-button{
+	  background-color: #FFF;
+	  color: #06402B;
+	  border: none;
+	  padding: 10px, 20px;
+	  margin: 5px;
+	  cursor: pointer;
+	  font-size: 16px;
+	  border-radius: 5px;
+	  position: relative;
+	  display: inline-block;
+	}
+	button{
+	  cursor: pointer;
+	}
+	.nav-button:hover{
+	  background-color:#ddd
+	}
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+	  background-color: #362312;
+	  color: white;
     }
     .book {
       display: flex;
@@ -36,15 +70,78 @@
 		display: inline;
 	}
   </style>
-  <ul>
-	<li><a href="https://macaronibot5.github.io/index.html">Home</a></li>
-	<li><a href="https://macaronibot5.github.io/mileone.html">Milestone 1</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoMain.html">Milestone 2</a></li>
-  </ul>
-  <ul>
-	 <li><a href="https://macaronibot5.github.io/mileTwoMain.html">Book Search</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoDetail.html">Book Details</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoShelf.html">Book Shelf</a></li>
-  </ul>
+  <script>
+	async function loadBookChoice(){
+		try{
+			const response = localStorage.getItem("bookLink");
+            const data = response.json();
+            const bookChoice = data.items;
+			displayBook(bookChoice);
+		}
+	}
+  </script>
 </head>
+<header>
+	<div class="nav-header">
+	<button class="nav-button" onclick="location.href='index.html'">Project Home</button>
+	<button class="nav-button" onclick="location.href='mileone.html'">Milestone 1</button>
+	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Milestone 2</button>
+  </div>
+  <<div class="nav-header1">
+	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Book Search</button>
+	<button class="nav-button" onclick="location.href='mileTwoDetail.html'">Book Details</button>
+	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
+  </div>
+</header>
+<body onload="loadBookChoice()">
+	<h1>Book Information</h1>
+  
+  <div id="singleBookContainer">
+    <h2>Single Book</h2>
+    <div id="singleBook"></div>
+  </div>
+  <script>
+	function displayBook(book) {
+        var container = document.getElementById('singleBook');
+        container.innerHTML = ''; // Clear any existing content
+
+        if (book) {
+          var bookInfo = book.volumeInfo;
+          var bookDiv = document.createElement('div');
+          bookDiv.className = 'book';
+          
+          var coverImg = document.createElement('img');
+          coverImg.src = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
+          coverImg.alt = bookInfo.title;
+          
+          var detailsDiv = document.createElement('div');
+          
+          var titleElem = document.createElement('h3');
+          titleElem.textContent = bookInfo.title || 'No title available';
+		  if (bookInfo.subtitle){
+			titleElem.textContent = titleElem.textContent + ": " + bookInfo.subtitle;
+		  }
+          
+          var authorElem = document.createElement('p');
+          authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
+		  
+		  var publisherElem = document.createElement('p');
+		  publisherElem.textContent = bookInfo.publisher + bookInfo.publishedDate;
+		  
+		  var descElem = document.createElement('p');
+		  descElem.textContent = bookInfo.description;
+          
+          detailsDiv.appendChild(titleElem);
+          detailsDiv.appendChild(authorElem);
+		  detailsDiv.appendChild(publisherElem);
+		  detailsDiv.appendChild(descElem);
+          
+          bookDiv.appendChild(coverImg);
+          bookDiv.appendChild(detailsDiv);
+          
+          container.appendChild(bookDiv);
+        }
+      }
+  </script>
+</body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Books API Display</title>
+    <script>
+        async function fetchBooks() {
+            const apiUrl = document.getElementById('apiUrl').value;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                const books = data.items;
+
+                // Clear previous results
+                const tableBody = document.getElementById('booksTableBody');
+                tableBody.innerHTML = '';
+
+                // Populate the table with book titles and covers
+                books.forEach(book => {
+                    const title = book.volumeInfo.title;
+                    const coverImage = book.volumeInfo.imageLinks?.thumbnail || 'No image available';
+
+                    const row = document.createElement('tr');
+                    const titleCell = document.createElement('td');
+                    const coverCell = document.createElement('td');
+
+                    titleCell.textContent = title;
+                    coverCell.innerHTML = `<img src="${coverImage}" alt="${title}" style="width: 60px; height: auto;">`;
+
+                    row.appendChild(titleCell);
+                    row.appendChild(coverCell);
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('An error occurred while fetching the data. Please check the API URL and try again.');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<h2>Google Books API Results</h2>
+<input type="text" id="apiUrl" placeholder="Enter Google Books API URL" style="width: 300px;">
+<button onclick="fetchBooks()">Fetch Books</button>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Cover</th>
+        </tr>
+    </thead>
+    <tbody id="booksTableBody">
+        <!-- Book results will be inserted here -->
+    </tbody>
+</table>
+
+</body>
+</html>

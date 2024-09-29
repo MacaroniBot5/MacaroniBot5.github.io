@@ -3,12 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Books Display</title>
+  <title>Book Search</title>
   <style>
+	header{
+	  color: white;
+	}
+	.nav-header{
+	  background-color: #06402B;
+	  padding: 10px;
+	  text-align: left;
+	}
+	.nav-header1{
+	  background-color: #06402B;
+	  padding: 10px;
+	  text-align: center;
+	  border: solid;
+	}
+	.nav-button{
+	  background-color: #FFF;
+	  color: #06402B;
+	  border: none;
+	  padding: 10px, 20px;
+	  margin: 5px;
+	  cursor: pointer;
+	  font-size: 16px;
+	  border-radius: 5px;
+	  position: relative;
+	  display: inline-block;
+	}
+	.nav-button:hover{
+	  background-color:#ddd
+	}
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+	  background-color: #362312;
+	  color: white;
     }
+	button{
+	  cursor: pointer;
+	}
     .book {
       display: flex;
       align-items: center;
@@ -36,15 +70,86 @@
 		display: inline;
 	}
   </style>
-  <ul>
-	<li><a href="https://macaronibot5.github.io/index.html">Home</a></li>
-	<li><a href="https://macaronibot5.github.io/mileone.html">Milestone 1</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoMain.html">Milestone 2</a></li>
-  </ul>
-  <ul>
-	 <li><a href="https://macaronibot5.github.io/mileTwoMain.html">Book Search</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoDetail.html">Book Details</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoShelf.html">Book Shelf</a></li>
-  </ul>
+  <script>
+		async function fetchBooks(poi){
+			const query = document.getElementById('searchInput').value;
+			const formattedQuery = encodeURIComponent(query);
+			const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${formattedQuery}&maxResults=40&startIndex=${poi}`;
+			
+			try {
+				const response = await fetch(apiUrl);
+                const data = await response.json();
+                const books = data.items;
+				
+				const tableBody = document.getElementById('booksTableBody');
+                tableBody.innerHTML = '';
+				
+				if (books && books.length > 0) {
+                    // Create a 5x8 table
+                    let count = 0;
+                    for (let i = 0; i < 8; i++) {
+                        const row = document.createElement('tr');
+                        for (let j = 0; j < 5; j++) {
+                            const cell = document.createElement('td');
+                            if (count < books.length) {
+                                const book = books[count];
+                                const title = book.volumeInfo.title;
+                                const coverImage = book.volumeInfo.imageLinks?.thumbnail || 'No image available';
+                                const bookInfo = book.selfLink;
+								function goToBookDetail(){
+									localStorage.clear();
+									localStorage.setItem("bookLink",bookInfo);
+									location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
+								}
+                                cell.innerHTML = `<strong>${title}</strong><br><button onclick="goToBookDetail()"><img src="${coverImage}" alt="${title}" style="width: 100px; height: auto;"></button>`;
+                            } else {
+                                cell.textContent = 'No book available'; // Empty cell if no book
+                            }
+                            row.appendChild(cell);
+                            count++;
+                        }
+                        tableBody.appendChild(row);
+                    }
+                } else {
+                    alert('No books found. Please try a different query.');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('An error occurred while fetching the data. Please check the API URL and try again.');
+			}
+		}
+	</script>
 </head>
+<header>
+	<div class="nav-header">
+	<button class="nav-button" onclick="location.href='index.html'">Project Home</button>
+	<button class="nav-button" onclick="location.href='mileone.html'">Milestone 1</button>
+	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Milestone 2</button>
+  </div>
+  <div class="nav-header1">
+	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Book Search</button>
+	<button class="nav-button" onclick="location.href='mileTwoDetail.html'">Book Details</button>
+	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
+  </div>
+</header>
+<body>
+	<input position="left" type="text" id="searchInput" placeholder="Enter Search" style="width: 300px;">
+	<button onclick="fetchBooks(0)">Search</button>
+	<button onclick="fetchBooks(0)">Page 1</button>
+	<button onclick="fetchBooks(40)">Page 2</button>
+	<button onclick="fetchBooks(80)">Page 3</button>
+	<button onclick="fetchBooks(120)">page 4</button>
+	<button onclick="fetchBooks(160)">Page 5</button>
+	<p><strong>Click on Book Cover for Details</strong></p>
+	<table border="1">
+    <thead>
+        <tr>
+            <th colspan="5">Book Results</th>
+        </tr>
+    </thead>
+    <tbody id="booksTableBody">
+        <!-- Book results inserted here -->
+    </tbody>
+</table>
+</body>
 </html>

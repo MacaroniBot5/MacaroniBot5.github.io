@@ -3,11 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Books Display</title>
+  <title>Public Bookshelf</title>
   <style>
+	header{
+	  color: white;
+	}
+	.nav-header{
+	  background-color: #06402B;
+	  padding: 10px;
+	  text-align: left;
+	}
+	.nav-header1{
+	  background-color: #06402B;
+	  padding: 10px;
+	  text-align: center;
+	  border: solid;
+	}
+	.nav-button{
+	  background-color: #FFF;
+	  color: #06402B;
+	  border: none;
+	  padding: 10px, 20px;
+	  margin: 5px;
+	  cursor: pointer;
+	  font-size: 16px;
+	  border-radius: 5px;
+	  position: relative;
+	  display: inline-block;
+	}
+	.nav-button:hover{
+	  background-color:#ddd
+	}
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+	  background-color: #362312;
+	  color: white;
     }
     .book {
       display: flex;
@@ -36,15 +67,20 @@
 		display: inline;
 	}
   </style>
-  <ul>
-	<li><a href="https://macaronibot5.github.io/index.html">Home</a></li>
-	<li><a href="https://macaronibot5.github.io/mileone.html">Milestone 1</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoMain.html">Milestone 2</a></li>
-  </ul>
-  <ul>
-	 <li><a href="https://macaronibot5.github.io/mileTwoMain.html">Book Search</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoDetail.html">Book Details</a></li>
-	<li><a href="https://macaronibot5.github.io/mileTwoShelf.html">Book Shelf</a></li>
-  </ul>
 </head>
+<header>
+	<div class="nav-header">
+	<button class="nav-button" onclick="location.href='index.html'">Project Home</button>
+	<button class="nav-button" onclick="location.href='mileone.html'">Milestone 1</button>
+	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Milestone 2</button>
+  </div>
+  <<div class="nav-header1">
+	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Book Search</button>
+	<button class="nav-button" onclick="location.href='mileTwoDetail.html'">Book Details</button>
+	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
+  </div>
+</header>
+<body>
+
+</body>
 </html>
