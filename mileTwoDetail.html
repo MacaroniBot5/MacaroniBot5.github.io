@@ -78,6 +78,7 @@
             const data = response.json;
 			//(data.volumeInfo.title);
             //const bookChoice = data.items;
+			console.log(data.volumeInfo.title);
 			displayBook(data);
 		} catch (error) {
                 console.error('Error fetching data:', error);
