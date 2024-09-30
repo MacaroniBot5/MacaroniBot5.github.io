@@ -117,7 +117,6 @@
 		
 		async function bookDetails(countItem){
 			var temp = localStorage.getItem(countItem);
-			alert(books[temp].selfLink);
 			localStorage.setItem("choice",books[temp].selfLink);
 			location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
 		}

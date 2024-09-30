@@ -73,9 +73,7 @@
   <script>
 	async function loadBookChoice(){
 		var tmep = localStorage.getItem("choice");
-		alert(tmep);
 		try{
-			alert("help the third");
 			const response = await fetch(tmep);
             const data = await response.json();
 			displayBook(data);
