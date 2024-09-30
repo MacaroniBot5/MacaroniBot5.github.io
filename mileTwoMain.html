@@ -61,7 +61,7 @@
     .book p {
       margin: 0;
       font-size: 1em;
-      color: #555;
+      color: #FFF;
     }
     #next-button {
       margin-top: 20px;
@@ -79,8 +79,7 @@
 			try {
 				const response = await fetch(apiUrl);
                 const data = await response.json();
-                const books = data.items;
-				
+                books = data.items;
 				const tableBody = document.getElementById('booksTableBody');
                 tableBody.innerHTML = '';
 				
@@ -97,7 +96,7 @@
                                 const book = books[count];
                                 const title = book.volumeInfo.title;
                                 const coverImage = book.volumeInfo.imageLinks?.thumbnail || 'No image available';
-								localStorage.setItem(nam2,book);
+								localStorage.setItem(nam2,count);
                                 cell.innerHTML = `<strong>${title}</strong><br><button id=${nam2} onclick="bookDetails(this.id)"><img src="${coverImage}" alt="${title}" style="width: 100px; height: auto;"></button>`;
                             } else {
                                 cell.textContent = 'No book available'; // Empty cell if no book
@@ -117,7 +116,9 @@
 		}
 		
 		async function bookDetails(countItem){
-			localStorage.setItem("choice",localStorage.getItem(countItem));
+			var temp = localStorage.getItem(countItem);
+			alert(books[temp].selfLink);
+			localStorage.setItem("choice",books[temp].selfLink);
 			location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
 		}
 	</script>

@@ -61,7 +61,7 @@
     .book p {
       margin: 0;
       font-size: 1em;
-      color: #FFF;
+      color: #555;
     }
     #next-button {
       margin-top: 20px;
@@ -71,19 +71,21 @@
 	}
   </style>
   <script>
-	async function loadBookChoice(){
-		var tmep = localStorage.getItem("choice");
+	alert("help the first");
+	function loadBookChoice(){
+		alert("help the second");
+		var tmep = localStorage.getItem("choice").selfLink;
 		alert(tmep);
 		try{
 			alert("help the third");
-			const response = await fetch(tmep);
-            const data = await response.json();
+			const response = fetch(tmep);
+            const data = response.json();
 			displayBook(data);
 		} catch (error) {
-            console.error('Error fetching data:', error);
-            alert('An error occurred while fetching the data. Please check the API URL and try again.');
+                console.error('Error fetching data:', error);
+                alert('An error occurred while fetching the data. Please check the API URL and try again.');
+		  }
 		}
-	}
 	function displayBook(book) {
         var container = document.getElementById('singleBook');
         container.innerHTML = ''; // Clear any existing content
@@ -113,24 +115,11 @@
 		  publisherElem.textContent = bookInfo.publisher + bookInfo.publishedDate;
 		  
 		  var descElem = document.createElement('p');
-		  var descTemp = bookInfo.description;
-		  descElem.textContent = descTemp;
-		  
-		  var pageElem = document.createElement('p');
-		  pageElem.textContent = bookInfo.pageCount + " pages long.";
-		  
-		  var catElem = document.createElement('p');
-		  catElem.textContent = "Categories" + bookInfo.categories.join(', ');
-		  
-		  var maturElem = document.createElement('p');
-		  maturElem.textContent = "Maturity Rating: " + bookInfo.maturityRating;
+		  descElem.textContent = bookInfo.description;
           
           detailsDiv.appendChild(titleElem);
           detailsDiv.appendChild(authorElem);
 		  detailsDiv.appendChild(publisherElem);
-		  detailsDiv.appendChild(catElem);
-		  detailsDiv.appendChild(maturElem);
-		  detailsDiv.appendChild(pageElem);
 		  detailsDiv.appendChild(descElem);
           
           bookDiv.appendChild(coverImg);
@@ -153,7 +142,7 @@
 	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
   </div>
 </header>
-<body onload="loadBookChoice()">
+<body>
 	<h1>Books Display</h1>
   
   <div id="singleBookContainer">
@@ -161,5 +150,12 @@
     <div id="singleBook"></div>
   </div>
 
+  <div id="carouselBookContainer">
+    <h2>Multiple Books</h2>
+    <div id="multipleBook"></div>
+    <button id="next-button">Next Book</button> 
+  </div>
+
+  
 </body>
 </html>

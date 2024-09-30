@@ -70,6 +70,56 @@
 		display: inline;
 	}
   </style>
+  <script>
+		async function fetchBooks(){
+			const apiUrl = `https://www.googleapis.com/books/v1/users/117205406417965904628/bookshelves/1001/volumes?key=AIzaSyARevPt_SEtBQ_2O4wwi1xWnOiiO-Dax9s`;
+			localStorage.clear();
+			try {
+				const response = await fetch(apiUrl);
+                const data = await response.json();
+                books = data.items;
+				const tableBody = document.getElementById('booksTableBody');
+                tableBody.innerHTML = '';
+				
+				if (books && books.length > 0) {
+                    // Create a 5x8 table
+                    let count = 0;
+                    for (let i = 0; i < 8; i++) {
+                        const row = document.createElement('tr');
+						var nam = "row" + i;
+                        for (let j = 0; j < 5; j++) {
+                            const cell = document.createElement('td');
+							var nam2 = "book" + i + j;
+                            if (count < books.length) {
+                                const book = books[count];
+                                const title = book.volumeInfo.title;
+                                const coverImage = book.volumeInfo.imageLinks?.thumbnail || 'No image available';
+								localStorage.setItem(nam2,count);
+                                cell.innerHTML = `<strong>${title}</strong><br><button id=${nam2} onclick="bookDetails(this.id)"><img src="${coverImage}" alt="${title}" style="width: 100px; height: auto;"></button>`;
+                            } else {
+                                cell.textContent = 'No book available'; // Empty cell if no book
+                            }
+                            row.appendChild(cell);
+                            count++;
+                        }
+                        tableBody.appendChild(row);
+                    }
+                } else {
+                    alert('No books found. Please try a different query.');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('An error occurred while fetching the data. Please check the API URL and try again.');
+			}
+		}
+		
+		async function bookDetails(countItem){
+			var temp = localStorage.getItem(countItem);
+			alert(books[temp].selfLink);
+			localStorage.setItem("choice",books[temp].selfLink);
+			location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
+		}
+	</script>
 </head>
 <header>
 	<div class="nav-header">
@@ -77,13 +127,22 @@
 	<button class="nav-button" onclick="location.href='mileone.html'">Milestone 1</button>
 	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Milestone 2</button>
   </div>
-  <<div class="nav-header1">
+  <div class="nav-header1">
 	<button class="nav-button" onclick="location.href='mileTwoMain.html'">Book Search</button>
 	<button class="nav-button" onclick="location.href='mileTwoDetail.html'">Book Details</button>
 	<button class="nav-button" onclick="location.href='mileTwoShelf.html'">Public Bookshelf</button>
   </div>
 </header>
-<body>
-
+<body onload="fetchBooks()">
+<p><strong>Click on Book Cover for Details</strong></p>
+	<table border="1">
+    <thead>
+        <tr>
+            <th colspan="5">Book Results</th>
+        </tr>
+    </thead>
+    <tbody id="booksTableBody">
+        <!-- Book results inserted here -->
+    </tbody>
 </body>
 </html>
