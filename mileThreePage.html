@@ -128,19 +128,22 @@
 			const formattedQuery = encodeURIComponent(query);
 			const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${formattedQuery}&startIndex=${poi}&callback=??`;
 			try {
-				//var books; 
-				//$.getJSON(apiUrl, async function(jay){
-					fetch(
-					books = jay;
+				$.getJSON(apiUrl, async function(jay){
+					localStorage.setItem(bookies,jay);
+					books = localStorage.getItem('bookies')
 					document.addEventListener('DOMContentLoaded', function() {
 						var tableBody = document.getElementById('btb');
 						while (tableBody.firstChild) {
 							tableBody.removeChild(tableBody.firstChild);
 						}
 					});
-					//var tableBody = document.getElementById('btb');
-					//tableBody.innerHTML = "Results appear Here";
-					console.log(books);
+					
+					document.addEventListener('DOMContentLoaded', function() {
+						var sideInfo = document.getElementById('detailDiv');
+						while (sideInfo.firstChild) {
+							sideInfo.removeChild(sideInfo.firstChild);
+						}
+					});
 					
 					if (books && books.length > 0) {
                     // Create a 5x2 table
@@ -169,7 +172,7 @@
                 } else {
                     alert('No books found. Please try a different query.');
                 }
-				//});
+				});
 			
 			
 			
@@ -213,9 +216,51 @@
 		
 		async function bookDetails(countItem){
 			var temp = localStorage.getItem(countItem);
-			localStorage.setItem("choice",books[temp].selfLink);
-			location.replace("https://macaronibot5.github.io/mileTwoDetail.html");
+			var bookList = localStorage.getItem('bookies');
+			
 		}
+		
+		function displaySingleBook(book) {
+        var container = document.getElementById('detailDiv');
+        container.innerHTML = ''; // Clear any existing content
+
+        if (book) {
+          var bookInfo = book.volumeInfo;
+          var bookDiv = document.createElement('div');
+          bookDiv.className = 'book';
+          
+          var coverImg = document.createElement('img');
+          coverImg.src = bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'default-cover.jpg';
+          coverImg.alt = bookInfo.title;
+          
+          var detailsDiv = document.createElement('div');
+          
+          var titleElem = document.createElement('h3');
+          titleElem.textContent = bookInfo.title || 'No title available';
+		  if (bookInfo.subtitle){
+			titleElem.textContent = titleElem.textContent + ": " + bookInfo.subtitle;
+		  }
+          
+          var authorElem = document.createElement('p');
+          authorElem.textContent = bookInfo.authors ? 'by ' + bookInfo.authors.join(', ') : 'No author available';
+		  
+		  var publisherElem = document.createElement('p');
+		  publisherElem.textContent = bookInfo.publisher + bookInfo.publishedDate;
+		  
+		  var descElem = document.createElement('p');
+		  descElem.textContent = bookInfo.description;
+          
+          detailsDiv.appendChild(titleElem);
+          detailsDiv.appendChild(authorElem);
+		  detailsDiv.appendChild(publisherElem);
+		  detailsDiv.appendChild(descElem);
+          
+          bookDiv.appendChild(coverImg);
+          bookDiv.appendChild(detailsDiv);
+          
+          container.appendChild(bookDiv);
+        }
+      }
   </script>
 </body>
 </html>
